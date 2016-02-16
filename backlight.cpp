@@ -1,3 +1,14 @@
+/*
+ * No arguments display current brightness level i percentage
+ * usage: +[percentage] raises brightness by percentage
+ *        -[percentage] lowers brightness by percentage
+ *         [percentage] sets brightness to percentage
+ *
+ * example: brightness +10 - Raises brightness by 10%
+ *
+ */
+
+
 #include <iostream>
 #include <string>
 #include <stdio.h>
