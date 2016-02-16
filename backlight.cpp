@@ -1,5 +1,5 @@
 /*
- * No arguments display current brightness level i percentage
+ * No arguments display current brightness level in percentage
  * usage: +[percentage] raises brightness by percentage
  *        -[percentage] lowers brightness by percentage
  *         [percentage] sets brightness to percentage
