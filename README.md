@@ -14,5 +14,5 @@ No arguments display current brightness level
 -[percentage] lowers brightness by percentage
  [percentage] sets brightness to percentage
  
-example: brightness +10 - Raises brightness by 10%
+example: backlight +10 - Raises brightness by 10%
 ```
