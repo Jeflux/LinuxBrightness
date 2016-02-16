@@ -6,3 +6,13 @@ Change permissions after compilation with
 # chown root:users filename
 # chmod a+xs filename
 ```
+
+# Usage
+```bash
+No arguments display current brightness level
++[percentage] raises brightness by percentage
+-[percentage] lowers brightness by percentage
+ [percentage] sets brightness to percentage
+ 
+example: brightness +10 - Raises brightness by 10%
+```
