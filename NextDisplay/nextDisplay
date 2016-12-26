@@ -1,0 +1,58 @@
+#!/usr/bin/python
+
+import subprocess
+import shlex
+
+class ConnectionInfo:
+    def __init__(self, name, connected, active):
+        self.name = name
+        self.connected = connected
+        self.active = active
+    name = ""
+    connected = False
+    active = False
+
+
+p = subprocess.Popen(["xrandr"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+pp = subprocess.Popen(["xrandr", "--listactivemonitors"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+o, err = p.communicate()
+oo, err = pp.communicate()
+
+out = o.decode("utf-8").split("\n")
+out = list(filter(lambda x: len(x) > 0, out))
+outActive = oo.decode("utf-8").split("\n")
+outActive = list(filter(lambda x: len(x) > 0 and "Monitors" not in x, outActive))
+outFiltered = list(filter(lambda x: "connected" in x, out))
+
+interfaces = dict()
+for item in outFiltered:
+    outSplit = item.split(" ")
+    interfaces[outSplit[0]] = ConnectionInfo(outSplit[0], 
+            outSplit[1] == "connected", False)
+
+for item in outActive:
+    key = item.split(" ")[2].split("+")[1]
+    interfaces[key].active = True
+
+connected = list()
+for k, e in interfaces.items():
+    if e.connected == True:
+        connected.append(e)
+
+activateNext = False
+nextActive = ""
+for item in connected:
+    if activateNext == True:
+        nextActive = item.name        
+    activateNext = item.active
+
+if activateNext:
+    nextActive = connected[0].name
+
+param = "xrandr --output " + nextActive + " --auto "
+for item in connected:
+    if item.name != nextActive:
+        param += "--output " + item.name + " --off "
+
+subprocess.call(shlex.split(param))
+
